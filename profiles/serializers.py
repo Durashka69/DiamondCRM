@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from profiles.models import User, Profile, Guild
+from profiles.models import User, Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,29 +18,30 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(
         read_only=True
     )
+    clan = serializers.ReadOnlyField(
+        source='clan.title'
+    )
 
     class Meta:
         model = Profile
         fields = (
+            'id',
             'user',
-            'profile_photo'
+            'profile_photo',
+            'rang',
+            'clan'
         )
 
 
-class GuildSerializer(serializers.ModelSerializer):
-    creator = serializers.ReadOnlyField(
-        source='creator.username'
+class ClanProfileSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(
+        source='user.username'
     )
 
     class Meta:
-        model = Guild
+        model = Profile
         fields = (
             'id',
-            'creator',
-            'title',
-            'description'
+            'user',
+            'rang'
         )
-
-        extra_kwargs = {
-            'creator': {'read_only': True}
-        }

@@ -1,7 +1,7 @@
 from rest_framework.routers import DefaultRouter
 
 from profiles.views import (
-    UserViewSet, ProfileViewSet, GuildViewSet
+    UserViewSet, ProfileViewSet
 )
 
 
@@ -9,7 +9,6 @@ router = DefaultRouter()
 
 router.register('users', UserViewSet, basename='users')
 router.register('profiles', ProfileViewSet, basename='profiles')
-router.register('guilds', GuildViewSet, basename='guilds')
 
 urlpatterns = []
 

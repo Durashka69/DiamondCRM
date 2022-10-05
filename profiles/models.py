@@ -3,38 +3,16 @@ from django.contrib.auth import get_user_model
 
 from profiles.choices import RANGS
 
+from clans.models import Clan
+
 
 User = get_user_model()
-
-
-class Guild(models.Model):
-    creator = models.ForeignKey(
-        User, 
-        on_delete=models.SET_NULL,
-        null=True, blank=True,
-        verbose_name='Основатель гильдии'
-    )
-    title = models.CharField(
-        max_length=255, 
-        verbose_name="Название"
-    )
-    description = models.TextField(
-        verbose_name='Описание гильдии'
-    )
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Гильдия"
-        verbose_name_plural = "Гильдии"
 
 
 class Profile(models.Model):
     user = models.OneToOneField(
         User, 
         on_delete=models.CASCADE, 
-        primary_key=True, 
         related_name="profile"
     )
     profile_photo = models.ImageField(
@@ -44,14 +22,14 @@ class Profile(models.Model):
     rang = models.CharField(
         max_length=50,
         choices=RANGS,
-        verbose_name='Ранг'
+        verbose_name='Ранг',
+        default='Первый ранг'
     )
-    guild = models.ForeignKey(
-        Guild,
-        on_delete=models.SET_NULL,
-        related_name='profile',
-        verbose_name='Гильдия',
-        null=True, blank=True
+    clan = models.ForeignKey(
+        Clan,
+        on_delete=models.CASCADE,
+        related_name='profiles',
+        verbose_name='Клан',
     )
 
     def __str__(self):

@@ -10,6 +10,7 @@ urlpatterns = [
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
     path("api/", include("profiles.urls")),
+    path('api/', include('clans.urls'))
 ]
 
 urlpatterns += docs_urls
